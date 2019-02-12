@@ -299,7 +299,7 @@ void rtpforward_create_session(janus_plugin_session *handle, int *error) {
 	session->sendsockaddr = (struct sockaddr_in){ .sin_family = AF_INET };
 	
 	strcpy(session->negotiate_acodec, "opus");
-	strcpy(session->negotiate_vcodec, "vp8");
+	strcpy(session->negotiate_vcodec, "h264");
 	
 	session->video_enabled = TRUE;
 	session->audio_enabled = TRUE;
@@ -453,13 +453,13 @@ struct janus_plugin_result *rtpforward_handle_message(janus_plugin_session *hand
 			const char *negotiate_vcodec = json_string_value(json_object_get(body, "negotiate_vcodec"));
 			if (negotiate_vcodec) {
 				// For supported video codecs, see sdp-utils.c
-				if (!strcmp(negotiate_vcodec, "h264")) {
-					strcpy(session->negotiate_vcodec, "h264");
+				if (!strcmp(negotiate_vcodec, "vp8")) {
+					strcpy(session->negotiate_vcodec, "vp8");
 				} else if (!strcmp(negotiate_vcodec, "vp9")) {
 					strcpy(session->negotiate_vcodec, "vp9");
 				} else {
 					// "vp8" or default
-					strcpy(session->negotiate_vcodec, "vp8");
+					strcpy(session->negotiate_vcodec, "h264");
 				}
 			}
 			
